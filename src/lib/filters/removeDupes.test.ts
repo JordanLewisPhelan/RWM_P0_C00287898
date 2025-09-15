@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { dupeCheck } from './removeDupes';
 
-describe('Cube filter', () => {
+describe('Dupe filter', () => {
   it('Duplicate check a sequence', () => {
-    const input = [16, 36, 64, 144, 256];
-    const expected = [4, 6, 8, 12, 16];
+    const input = [16, 36, 64, 144, 256, 36, 36];
+    const expected = [16, 36, 64, 144, 256];
     expect(dupeCheck(input)).toEqual(expected);
   });
   it('Failure Check', () => {
