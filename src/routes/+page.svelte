@@ -1,12 +1,12 @@
 <script lang="ts">
   import { cubes } from '$lib/filters';
-  import { squareRoots } from '$lib/filters';
+  import { dupeCheck } from '$lib/filters';
   let raw = '1 3 5 7 9 999';
   $: input = raw.trim().split(/\s+/).filter(Boolean).map(Number);
   $: output = cubes(input);
 
-  $: squareInput = raw.trim().split(/\s+/).filter(Boolean).map(Number);
-  $: squareOutput = squareRoots(squareInput);
+  $: dupeInput = raw.trim().split(/\s+/).filter(Boolean).map(Number);
+  $: dupeOutput = dupeCheck(dupeInput);
 
 </script>
 
@@ -19,7 +19,7 @@
 <h2>Output</h2>
 <p>{"Sequence Output for Cubed Values: " + output.join(' ')}</p>
 
-<p>{"Sequence Output for Square Rooted Values: " +squareOutput.join(' ')}</p>
+<p>{"Sequence Output for Dupe Prevented Values: " + dupeOutput.join(' ')}</p>
 
 
 <style>
