@@ -27,5 +27,10 @@
 		"typescript": "^5.0.0",
 		"vite": "^7.0.4",
 		"vitest": "^3.2.4"
-	}
+	},
+	  "dependencies": {
+    "peer-filter-c00281281": "github:Nathan-Byrne/RWM_P0_C00281281#v0.1.3"
+  }
+
 }
+
