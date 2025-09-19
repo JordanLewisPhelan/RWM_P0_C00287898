@@ -10,12 +10,8 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-<<<<<<< Updated upstream
-		"test": "vitest"
-=======
 		"test": "vitest",
 		"emit:results": "npx tsx scripts/emit-results.mjs"
->>>>>>> Stashed changes
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",
