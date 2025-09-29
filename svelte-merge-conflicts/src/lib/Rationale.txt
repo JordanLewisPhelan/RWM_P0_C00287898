@@ -1,0 +1,13 @@
+1- First Commit - Added Branch A's button logic
+
+2- Second Commit - Added Branch B's button logic
+
+3- Third Commit - Big choice, had to choose what logic was better as a base, chose option B as it was more structured and detailed.
+
+4- Fourth Commit - Merged A and B nullifying the choice I made before, just had to deal with VScodes editor, accepted & updated codebase.
+
+
+
+
+NOTICE: Had issues installing and running other editors, could not catch screenshots of using it
+Secondly - due to placement of "Files to Include" I did not capture the 3 way merge.
