@@ -1,33 +1,74 @@
 <script lang="ts">
+    
   import ChecklistItem from './ChecklistItem.svelte';
+  import { itemsStore, percentStore } from '../stores/Checklist';
+  import { get } from 'svelte/store';
+  import { tick } from 'svelte';
 
-  type ChecklistChangeEvent = CustomEvent<{ id: number; done: boolean }>;
-
-  let items = [
-    { id: 1, label: 'Item 1', done: false },
-    { id: 2, label: 'Item 2', done: false },
-    { id: 3, label: 'Item 3', done: false },
-    { id: 4, label: 'Item 4', done: false },
-    { id: 5, label: 'Item 5', done: false },
-  ];
+  let items = [];
+  itemsStore.subscribe(v => (items = v));
 
   let visibleProgress = 0;
+  let animatedProgress = 0;
 
-  function handleChange(event: ChecklistChangeEvent) {
+  function handleChange(event: CustomEvent<{ id: number; done: boolean }>) {
     const { id, done } = event.detail;
-    items = items.map(i => i.id === id ? { ...i, done } : i);
+    itemsStore.update(arr => arr.map(i => (i.id === id ? { ...i, done } : i)));
   }
 
-  function submitProgress() {
-    const doneCount = items.filter(i => i.done).length;
-    visibleProgress = Math.round((doneCount / items.length) * 100);
+  async function submitProgress() {
+    const newProgress = get(percentStore);
+    visibleProgress = newProgress;
+
+    // animate
+    const start = animatedProgress;
+    const end = newProgress;
+    const duration = 1000; // ms
+    const steps = 60;
+    for (let i = 1; i <= steps; i++) {
+      animatedProgress = start + ((end - start) * i) / steps;
+      await tick();
+      await new Promise(r => setTimeout(r, duration / steps));
+    }
   }
 </script>
 
+<div>
+  {#each items as item (item.id)}
+    <ChecklistItem {...item} on:change={handleChange} />
+  {/each}
 
-{#each items as item}
-  <ChecklistItem {...item} on:change={handleChange} />
-{/each}
+<div class="progress-container">
+  <div class="progress-target" style="width: {visibleProgress}%"></div>
+  <div class="progress-animated" style="width: {animatedProgress}%"></div>
+</div>
 
-<p data-testid="progress">Progress: {visibleProgress}%</p>
-<button on:click={submitProgress}>Submit</button>
+  <p data-testid="progress">Progress: {visibleProgress}%</p>
+  <button on:click={submitProgress}>Submit</button>
+</div>
+
+
+<style>
+.progress-container {
+  position: relative;
+  height: 20px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-target {
+  position: absolute;
+  height: 100%;
+  background: lightgreen;
+  z-index: 1;
+}
+
+.progress-animated {
+  position: absolute;
+  height: 100%;
+  background: green;
+  z-index: 2;
+  transition: width 1s ease;
+}
+</style>
